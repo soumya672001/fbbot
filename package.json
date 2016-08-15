@@ -31,6 +31,5 @@
   },
   "devDependencies": {},
   "bundleDependencies": [],
-  "private": true,
-  "main": "./node_modules/botkit/facebook_bot.js"
+  "private": true
 }
