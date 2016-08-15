@@ -18,18 +18,19 @@
     "type": "git",
     "url": "https://github.com/openshift/origin-server"
   },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
+    "scripts": {
+    "start": "page_token=EAAI7JflkeIkBAHcfOpqyWq7HuOL4tPkAsgMZBjFDZAumQoYily0qBLTCcOL71JSsmwmhZB8eyZAZCuP3xiZB6CNdlOZBGwK6GzzpVlyan7MJ2oeZBzZCAOcVfOO59Vt1pjanfwXdslYSmBwmJzpmAkHoYmGRC57ID5KUim6ZBUSy9IuwZDZD verify_token=FbbotAppPageAccesstoken123 node ./node_modules/botkit/facebook_bot.js"
+  },
   "dependencies": {
+    "botkit": "^0.2.2",
     "express": "~3.4.4"
   },
   "devDependencies": {},
   "bundleDependencies": [],
-
   "private": true,
-  "main": "server.js"
+  "main": "./node_modules/botkit/facebook_bot.js"
 }
