@@ -1,7 +1,7 @@
 /**
  * http://usejsdoc.org/
  */
-var facebook_handler = require('../controllers/botkit').handler
+var facebook_handler = require('../controller/botkit').handler
 
 module.exports = function(app) {
   //public pages=============================================
