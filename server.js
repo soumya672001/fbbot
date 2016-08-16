@@ -3,7 +3,7 @@
 var express = require('express');
 var fs      = require('fs');
 var bodyParser     = require('body-parser'); //BodyParser pour POST
-var http           = require('http').Server(app);      //préparer le serveur web
+
 var dotenv         = require('dotenv')
 
 
@@ -118,6 +118,7 @@ var SampleApp = function() {
         //self.createRoutes();
     	
         self.app = express.createServer();
+        var http           = require('http').Server(self.app);      //préparer le serveur web
         self.app.use(express.static(__dirname + '/public'));
         self.app.use(bodyParser.json()); // for parsing application/json
         self.app.use(bodyParser.urlencoded({ extended: true })); //for parsing url encoded
