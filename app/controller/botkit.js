@@ -3,6 +3,7 @@
  */
 var Botkit                = require('botkit');
 var http = require('http');
+var request = require('request');
 //var mongoUri              = process.env.MONGODB_URI || 'mongodb://localhost/demo'
 //var db                    = require('../../config/db')({mongoUri: mongoUri})
 
