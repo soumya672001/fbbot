@@ -357,7 +357,7 @@ var handler = function(obj){
           }
 
           //save if user comes from m.me adress or Facebook search
-          create_user_if_new(facebook_message.sender.id, facebook_message.timestamp)
+          //create_user_if_new(facebook_message.sender.id, facebook_message.timestamp)
 
           controller.receiveMessage(bot, message);
         }
