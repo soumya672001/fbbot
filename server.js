@@ -117,7 +117,7 @@ var SampleApp = function() {
     self.initializeServer = function() {
         //self.createRoutes();
     	
-        self.app = express.createServer();
+        self.app = express();
         var http           = require('http').Server(self.app);      //préparer le serveur web
         self.app.use(express.static(__dirname + '/public'));
         self.app.use(bodyParser.json()); // for parsing application/json
