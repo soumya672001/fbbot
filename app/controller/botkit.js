@@ -8,7 +8,7 @@ var request = require('request');
 //var db                    = require('../../config/db')({mongoUri: mongoUri})
 
 var controller = Botkit.facebookbot({
-  debug: true,
+  debug: false,
   access_token: process.env.page_token,
   verify_token: process.env.verify_token
 //  storage: db
@@ -307,7 +307,7 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
 
 
 controller.on('message_received', function(bot, message) {
-    bot.reply(message, 'Try: `what is my name` or `structured` or `call me captain`');
+    bot.reply(message, 'Try: `what is my name` or `valuation` or `call me captain`');
     return false;
 });
 
