@@ -2,6 +2,9 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
+var bodyParser     = require('body-parser'); //BodyParser pour POST
+var http           = require('http').Server(app);      //préparer le serveur web
+var dotenv         = require('dotenv')
 
 
 /**
@@ -112,13 +115,17 @@ var SampleApp = function() {
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
+        //self.createRoutes();
+    	
         self.app = express.createServer();
-
+        self.app.use(express.static(__dirname + '/public'));
+        self.app.use(bodyParser.json()); // for parsing application/json
+        self.app.use(bodyParser.urlencoded({ extended: true })); //for parsing url encoded
+        require('./app/routes/routes')(self.app)
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
+        //for (var r in self.routes) {
+        //    self.app.get(r, self.routes[r]);
+        //}
     };
 
 
