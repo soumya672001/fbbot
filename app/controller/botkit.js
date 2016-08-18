@@ -298,7 +298,7 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
     function(bot, message) {
 
     //    var hostname = os.hostname();
-	    var hostname = process.env.HOSTNAME;
+	    var hostname = process.env.OPENSHIFT_BROKER_HOST;
         var uptime = formatUptime(process.uptime());
 
         bot.reply(message,
