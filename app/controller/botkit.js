@@ -261,6 +261,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
                convo.say('invalid policy number');
            //     convo.next();
                convo.repeat();
+               convo.next();
             }
         }
         ]);
