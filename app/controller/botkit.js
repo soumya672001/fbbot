@@ -258,8 +258,9 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
         {
             default: true,
             callback: function(response, convo) {
-                convo.say('Please provide valid policy number');
-                convo.next();
+               convo.say('invalid policy number');
+           //     convo.next();
+               convo.repeat();
             }
         }
         ]);
