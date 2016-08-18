@@ -297,7 +297,8 @@ controller.hears(['shutdown'], 'message_received', function(bot, message) {
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'], 'message_received',
     function(bot, message) {
 
-        var hostname = os.hostname();
+    //    var hostname = os.hostname();
+	    var hostname = process.env.HOSTNAME;
         var uptime = formatUptime(process.uptime());
 
         bot.reply(message,
@@ -307,7 +308,7 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
 
 
 controller.on('message_received', function(bot, message) {
-    bot.reply(message, 'Try: `what is my name` or `valuation` or `call me captain`');
+    bot.reply(message, 'Try: `what is my name` or `who are you` or `valuation` or `call me captain`');
     return false;
 });
 
