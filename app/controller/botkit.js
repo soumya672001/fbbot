@@ -387,7 +387,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		        	convo.say("You have following policies:");
 	    		            policies.forEach(function(element,index){
 	    		            	console.log(element, index);
-	    		            	convo.say( '  '(index + 1) + '.' + element.policy);
+	    		            	convo.say( '  ' + (index + 1) + '.' + element.policy);
 	    		            	});
 	    		         
 	    		        
