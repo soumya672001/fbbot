@@ -338,7 +338,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 
 });
 
-controller.hears(['testpolicy values'], 'message_received', function(bot, message) {
+controller.hears(['testvalues'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'graph.facebook.com/v2.6', // here only the domain name
 		    path : '/' + message.user + '?fields=first_name,last_name&acces_token=' + process.env.page_token, // the rest of the url with parameters if needed
