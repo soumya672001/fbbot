@@ -290,9 +290,6 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		        console.info('\n\nCall completed');
 //		        convo.say("You have following policies - select the number or all")
 		        policies = d;
-		      });
-//		        convo.say('valuation is: ' + PolValue.valuation);
-//		        convo.next();
 		        bot.startConversation(message, function(err, convo) {
 		        	
 		        	convo.say("You have following policies:");
@@ -326,6 +323,9 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		            }
 		            ]);
 		        });
+		      });
+//		        convo.say('valuation is: ' + PolValue.valuation);
+//		        convo.next();
     		});
 
     		reqGet.end();
