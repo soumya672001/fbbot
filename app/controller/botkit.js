@@ -269,7 +269,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 });
 
 controller.hears(['policy values'], 'message_received', function(bot, message) {
-	
+	var policies;
 	var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
 		    path : '/policyvalue?first_name=Soumyajita&last_name=Banerjeea', // the rest of the url with parameters if needed
@@ -284,9 +284,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		    console.log("statusCode: ", res.statusCode);
 		    // uncomment it for header details
 		//  console.log("headers: ", res.headers);
-		    var policies;
-
-		    res.on('data', function(d) {
+		        res.on('data', function(d) {
 		        console.info('GET result:\n');
 		        process.stdout.write(d);
 		        console.info('\n\nCall completed');
@@ -295,46 +293,48 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		      });
 //		        convo.say('valuation is: ' + PolValue.valuation);
 //		        convo.next();
+		        bot.startConversation(message, function(err, convo) {
+		        	
+		        	convo.say("You have following policies:");
+		            policies.forEach(function(element,index){
+		            	console.log(elem, index);
+		            	convo.say(index + '.' + element.policy);
+		            	});
+		         
+		        
+		            convo.ask('select the number or all', [
+		                {
+		                    pattern: /^\d{1}$/,
+		                    callback: function(response, convo) {
+		                    	var listitem = response.text;
+		                    	convo.say (policies[listitem].policy + ":" + "£" + policies[listitem].valuation);
+		                    	convo.next();
+		                    	//var PolValue = res;
+		                    	//convo.say('valuation is: ' + PolValue.valuation);
+		                        //convo.next();
+		                        
+		                    }
+		                },
+		            {
+		                default: true,
+		                callback: function(response, convo) {
+		                   convo.say('invalid selection');
+		               //     convo.next();
+		                   convo.repeat();
+		                   convo.next();
+		                }
+		            }
+		            ]);
+		        });
     		});
 
     		reqGet.end();
     		reqGet.on('error', function(e) {
     		    console.error(e);
-    		    convo.next();
+    //		    convo.next();
+    		    bot.reply("error getting policies");
     		});
-    bot.startConversation(message, function(err, convo) {
-    	
-    	convo.say("You have following policies:");
-        policies.forEach(function(element,index){
-        	console.log(elem, index);
-        	convo.say(index + '.' + element.policy);
-        	});
-     
-    
-        convo.ask('select the number or all', [
-            {
-                pattern: /^\d{1}$/,
-                callback: function(response, convo) {
-                	var listitem = response.text;
-                	convo.say (policies[listitem].policy + ":" + "£" + policies[listitem].valuation);
-                	convo.next();
-                	//var PolValue = res;
-                	//convo.say('valuation is: ' + PolValue.valuation);
-                    //convo.next();
-                    
-                }
-            },
-        {
-            default: true,
-            callback: function(response, convo) {
-               convo.say('invalid selection');
-           //     convo.next();
-               convo.repeat();
-               convo.next();
-            }
-        }
-        ]);
-    });
+
 });
 
 controller.hears(['shutdown'], 'message_received', function(bot, message) {
