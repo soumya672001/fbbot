@@ -363,7 +363,7 @@ controller.hears(['testpolicy values'], 'message_received', function(bot, messag
 	    	var policies;
 	    	var optionsget = {
 	    		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
-	    		    path : '/policyvalue?first_name=' + userinfo.first_name + '&last_name=' + userinfo.last_name', // the rest of the url with parameters if needed
+	    		    path : '/policyvalue?first_name=' + userinfo.first_name + '&last_name=' + userinfo.last_name, // the rest of the url with parameters if needed
 	    		    method : 'GET' // do GET
 	    		};
 	    	
