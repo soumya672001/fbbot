@@ -294,7 +294,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		        	
 		        	convo.say("You have following policies:");
 		            policies.forEach(function(element,index){
-		            	console.log(elem, index);
+		            	console.log(element, index);
 		            	convo.say(index + '.' + element.policy);
 		            	});
 		         
