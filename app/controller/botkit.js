@@ -272,8 +272,6 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 	
 	var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
-		    // (no http/https !)
-		    //port : 8080,
 		    path : '/policyvalue?first_name=Soumyajita&last_name=Banerjeea', // the rest of the url with parameters if needed
 		    method : 'GET' // do GET
 		};
@@ -281,13 +279,12 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		console.info('Options prepared:');
 		console.info(optionsget);
 		console.info('Do the GET call');
-		//var PolValue;
 		// do the GET request
 		var reqGet = http.request(optionsget, function(res) {
 		    console.log("statusCode: ", res.statusCode);
 		    // uncomment it for header details
 		//  console.log("headers: ", res.headers);
-		var policies;
+		    var policies;
 
 		    res.on('data', function(d) {
 		        console.info('GET result:\n');
@@ -295,11 +292,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		        console.info('\n\nCall completed');
 //		        convo.say("You have following policies - select the number or all")
 		        policies = d;
-//		        policies.forEach(function(element,index){
-//		        	console.log(elem, index);
-//		        	convo.say(index + '.' + element.policy);
-//		        	});
-		        }
+		      });
 //		        convo.say('valuation is: ' + PolValue.valuation);
 //		        convo.next();
     		});
@@ -316,7 +309,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
         	console.log(elem, index);
         	convo.say(index + '.' + element.policy);
         	});
-        }
+     
     
         convo.ask('select the number or all', [
             {
