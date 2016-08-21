@@ -349,7 +349,7 @@ controller.hears(['testvalues'], 'message_received', function(bot, message) {
 	console.info('Do the GET call');
 	//var PolValue;
 	// do the GET request
-	var reqGet = http.request(optionsget, function(res) {
+	var reqGet = https.request(optionsget, function(res) {
 	    console.log("statusCode: ", res.statusCode);
 	    // uncomment it for header details
 	//  console.log("headers: ", res.headers);
