@@ -289,7 +289,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 		        process.stdout.write(d);
 		        console.info('\n\nCall completed');
 //		        convo.say("You have following policies - select the number or all")
-		        policies = d;
+		        policies = JSON.parse(d);
 		        bot.startConversation(message, function(err, convo) {
 		        	
 		        	convo.say("You have following policies:");
