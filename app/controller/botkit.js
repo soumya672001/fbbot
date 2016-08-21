@@ -342,6 +342,7 @@ controller.hears(['testvalues'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'graph.facebook.com/v2.6', // here only the domain name
 		    path : '/' + message.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token, // the rest of the url with parameters if needed
+		    port : 443,
 		    method : 'GET' // do GET
 		};
 	console.info('Options prepared:');
