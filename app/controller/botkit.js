@@ -391,7 +391,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		            	});
 	    		         
 	    		        
-	    		            convo.ask('select the number or all', [
+	    		            convo.ask('select the number', [
 	    		                {
 	    		                    pattern: /^\d{1}$/,
 	    		                    callback: function(response, convo) {
