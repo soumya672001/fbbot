@@ -203,7 +203,7 @@ controller.hears(['what is my name', 'who am i'], 'message_received', function(b
     });
 });
 
-controller.hears(['valuation'], 'message_received', function(bot, message) {
+controller.hears(['testvalues'], 'message_received', function(bot, message) {
 
     bot.startConversation(message, function(err, convo) {
 
@@ -338,7 +338,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 
 });
 
-controller.hears(['testvalues'], 'message_received', function(bot, message) {
+controller.hears(['valuation'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'graph.facebook.com', // here only the domain name
 		    path : '/v2.6/' + message.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token, // the rest of the url with parameters if needed
@@ -387,7 +387,7 @@ controller.hears(['testvalues'], 'message_received', function(bot, message) {
 	    		        	convo.say("You have following policies:");
 	    		            policies.forEach(function(element,index){
 	    		            	console.log(element, index);
-	    		            	convo.say(index + '.' + element.policy);
+	    		            	convo.say( '  '(index + 1) + '.' + element.policy);
 	    		            	});
 	    		         
 	    		        
@@ -395,8 +395,8 @@ controller.hears(['testvalues'], 'message_received', function(bot, message) {
 	    		                {
 	    		                    pattern: /^\d{1}$/,
 	    		                    callback: function(response, convo) {
-	    		                    	var listitem = response.text;
-	    		                    	convo.say (policies[listitem].policy + ":" + "£" + policies[listitem].valuation);
+	    		                    	var listitem = response.text - 1;
+	    		                    	convo.say (policies[listitem].policy + ":" + " £" + policies[listitem].valuation);
 	    		                    	convo.next();
 	    		                    	//var PolValue = res;
 	    		                    	//convo.say('valuation is: ' + PolValue.valuation);
