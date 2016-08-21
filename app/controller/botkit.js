@@ -3,6 +3,7 @@
  */
 var Botkit                = require('botkit');
 var http = require('http');
+var https = require('https');
 var request = require('request');
 //var mongoUri              = process.env.MONGODB_URI || 'mongodb://localhost/demo'
 //var db                    = require('../../config/db')({mongoUri: mongoUri})
@@ -335,6 +336,103 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
     		    bot.reply("error getting policies");
     		});
 
+});
+
+controller.hears(['testpolicy values'], 'message_received', function(bot, message) {
+	var optionsget = {
+		    host : 'graph.facebook.com/v2.6', // here only the domain name
+		    path : '/' + message.user + '?fields=first_name,last_name&acces_token=' + process.env.page_token, // the rest of the url with parameters if needed
+		    method : 'GET' // do GET
+		};
+	console.info('Options prepared:');
+	console.info(optionsget);
+	console.info('Do the GET call');
+	//var PolValue;
+	// do the GET request
+	var reqGet = http.request(optionsget, function(res) {
+	    console.log("statusCode: ", res.statusCode);
+	    // uncomment it for header details
+	//  console.log("headers: ", res.headers);
+
+
+	    res.on('data', function(d) {
+	        console.info('GET result:\n');
+	        process.stdout.write(d);
+	        console.info('\n\nCall completed');
+	        var userinfo = JSON.parse(d);
+	    	var policies;
+	    	var optionsget = {
+	    		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+	    		    path : '/policyvalue?first_name=' + userinfo.first_name + '&last_name=' + userinfo.last_name', // the rest of the url with parameters if needed
+	    		    method : 'GET' // do GET
+	    		};
+	    	
+	    		console.info('Options prepared:');
+	    		console.info(optionsget);
+	    		console.info('Do the GET call');
+	    		// do the GET request
+	    		var reqGet = http.request(optionsget, function(res) {
+	    		    console.log("statusCode: ", res.statusCode);
+	    		    // uncomment it for header details
+	    		//  console.log("headers: ", res.headers);
+	    		        res.on('data', function(d) {
+	    		        console.info('GET result:\n');
+	    		        process.stdout.write(d);
+	    		        console.info('\n\nCall completed');
+//	    		        convo.say("You have following policies - select the number or all")
+	    		        policies = JSON.parse(d);
+	    		        bot.startConversation(message, function(err, convo) {
+	    		        	
+	    		        	convo.say("You have following policies:");
+	    		            policies.forEach(function(element,index){
+	    		            	console.log(element, index);
+	    		            	convo.say(index + '.' + element.policy);
+	    		            	});
+	    		         
+	    		        
+	    		            convo.ask('select the number or all', [
+	    		                {
+	    		                    pattern: /^\d{1}$/,
+	    		                    callback: function(response, convo) {
+	    		                    	var listitem = response.text;
+	    		                    	convo.say (policies[listitem].policy + ":" + "£" + policies[listitem].valuation);
+	    		                    	convo.next();
+	    		                    	//var PolValue = res;
+	    		                    	//convo.say('valuation is: ' + PolValue.valuation);
+	    		                        //convo.next();
+	    		                        
+	    		                    }
+	    		                },
+	    		            {
+	    		                default: true,
+	    		                callback: function(response, convo) {
+	    		                   convo.say('invalid selection');
+	    		               //     convo.next();
+	    		                   convo.repeat();
+	    		                   convo.next();
+	    		                }
+	    		            }
+	    		            ]);
+	    		        });
+	    		      });
+//	    		        convo.say('valuation is: ' + PolValue.valuation);
+//	    		        convo.next();
+	        		});
+
+	        		reqGet.end();
+	        		reqGet.on('error', function(e) {
+	        		    console.error(e);
+	        //		    convo.next();
+	        		    bot.reply("error getting policies");
+	        		});
+	    });
+	});
+
+	reqGet.end();
+	reqGet.on('error', function(e) {
+	    console.error(e);
+	    bot.reply("error getting userinfo");
+	});
 });
 
 controller.hears(['shutdown'], 'message_received', function(bot, message) {
