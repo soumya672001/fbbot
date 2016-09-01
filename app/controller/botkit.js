@@ -480,6 +480,7 @@ controller.hears(['login'], 'message_received',
 	    function(bot, message) {
 
 	    //    var hostname = os.hostname();
+	        console.info('in the login section');
 		    var message_with_attachment = {
 		        attachment: {
 		            type: "template",
