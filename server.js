@@ -122,6 +122,8 @@ var SampleApp = function() {
         self.app.use(express.static(__dirname + '/public'));
         self.app.use(bodyParser.json()); // for parsing application/json
         self.app.use(bodyParser.urlencoded({ extended: true })); //for parsing url encoded
+        self.app.set('view engine', 'ejs');
+        self.app.set('views', __dirname + '/views');
         require('./app/routes/routes')(self.app)
         //  Add handlers for the app (from the routes).
         //for (var r in self.routes) {
