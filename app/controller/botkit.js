@@ -476,6 +476,27 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
     });
 
 
+controller.hears(['login'], 'message_received',
+	    function(bot, message) {
+
+	    //    var hostname = os.hostname();
+		    var message_with_attachment = {
+		        attachment: {
+		            type: "template",
+		            payload: {
+		              template_type: "button",
+		              text: "Welcome. Link your account.",
+		              buttons:[{
+		                type: "account_link",
+		                url: process.env.OPENSHIFT_NODEJS_IP + "/authorize"
+		              }]
+		            }
+		          }
+		    };
+	        //var uptime = formatUptime(process.uptime());
+
+	        bot.reply(message, message_with_attachment);
+	    });
 
 controller.on('message_received', function(bot, message) {
     bot.reply(message, 'Try: `what is my name` or `who are you` or `valuation` or `call me captain`');
