@@ -381,6 +381,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		        process.stdout.write(d);
 	    		        console.info('\n\nCall completed');
 //	    		        convo.say("You have following policies - select the number or all")
+	    		        if (d){
 	    		        policies = JSON.parse(d);
 	    		        bot.startConversation(message, function(err, convo) {
 	    		        	
@@ -415,6 +416,9 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		            }
 	    		            ]);
 	    		        });
+	    		        }
+	    		        else
+	    		        	{bot.reply("no policies found");}
 	    		      });
 //	    		        convo.say('valuation is: ' + PolValue.valuation);
 //	    		        convo.next();
@@ -490,6 +494,29 @@ controller.hears(['login'], 'message_received',
 		              'buttons':[{
 		                'type': 'account_link',
 		                'url': 'fbbot-nodeaholic.rhcloud.com/authorize'
+		              }]
+		            }
+		          }
+		    };
+	        //var uptime = formatUptime(process.uptime());
+
+	        bot.reply(message, message_with_attachment);
+	    });
+
+controller.hears(['lognew'], 'message_received',
+	    function(bot, message) {
+
+	    //    var hostname = os.hostname();
+	        console.info('in the login section');
+		    var message_with_attachment = {
+		        attachment: {
+		            'type': 'template',
+		            'payload': {
+		              'template_type': 'button',
+		              'text': 'Welcome. Link your account.',
+		              'buttons':[{
+		                'type': 'account_link',
+		                'url': 'fbbot-nodeaholic.rhcloud.com/login'
 		              }]
 		            }
 		          }
