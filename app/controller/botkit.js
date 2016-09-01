@@ -418,7 +418,9 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		        });
 	    		        }
 	    		        else
-	    		        	{bot.reply("no policies found");}
+	    		        	{
+	    		        	console.info('no policies');
+	    		        	bot.reply(message, 'no policies found');}
 	    		      });
 //	    		        convo.say('valuation is: ' + PolValue.valuation);
 //	    		        convo.next();
