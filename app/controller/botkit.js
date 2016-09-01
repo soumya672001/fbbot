@@ -483,13 +483,13 @@ controller.hears(['login'], 'message_received',
 	        console.info('in the login section');
 		    var message_with_attachment = {
 		        attachment: {
-		            type: "template",
-		            payload: {
-		              template_type: "button",
-		              text: "Welcome. Link your account.",
-		              buttons:[{
-		                type: "account_link",
-		                url: process.env.OPENSHIFT_NODEJS_IP + "/authorize"
+		            'type': 'template',
+		            'payload': {
+		              'template_type': 'button',
+		              'text': 'Welcome. Link your account.',
+		              'buttons':[{
+		                'type': 'account_link',
+		                'url': 'fbbot-nodeaholic.rhcloud.com/authorize'
 		              }]
 		            }
 		          }
