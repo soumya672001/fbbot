@@ -51,8 +51,8 @@ module.exports = function(app) {
 	    //delete req.session.token;
 
 	    // move success message into local variable so it only appears once (single read)
-	    var viewData = { success: req.session.success };
-	    delete req.session.success;
+	    var viewData = { success: 1 };
+	    //delete req.session.success;
 
 	    res.render('login', viewData);
 	});
