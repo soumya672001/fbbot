@@ -3,7 +3,7 @@
  */
 var facebook_handler = require('../controller/botkit').handler
 var http = require('http');
-var http = require('https');
+var https = require('https');
 
 module.exports = function(app) {
   //public pages=============================================
@@ -90,7 +90,7 @@ module.exports = function(app) {
 		        		    path : '/v2.6/me?access_token=' + process.env.page_token + '&fields=recipient&account_linking_token=' + accountLinkingToken, // the rest of the url with parameters if needed
 		        		    method : 'GET' // do GET
 		        		};
-		        		var reqGet = https.request(optionsget, function(res) {
+		        		var reqGet1 = https.request(optionsget, function(res) {
 		        		    console.log("statusCode: ", res.statusCode);
 		        		    // uncomment it for header details
 		        		//  console.log("headers: ", res.headers);
@@ -105,10 +105,12 @@ module.exports = function(app) {
 		        		  		    path : '/session?psid=' + page_scoped_id.recipient + '&custid=' + custauth.custid, // the rest of the url with parameters if needed
 		        		  		    method : 'GET' // do GET
 		        		  		};
-				        		var reqGet = http.request(optionsget, function(res) {
+				        		var reqGet2 = http.request(optionsget, function(res) {
 				        		    console.log("statusCode: ", res.statusCode);});
+				        		reqget2.end();
 		        		    })
 		        		});
+		        		reqGet1.end();
 		        		
 		        		res.writeHead(301,
 		        				  {Location: redirectURI + '&authorization_code=' + custauth.authorization_code}
