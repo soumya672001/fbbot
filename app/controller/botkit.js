@@ -533,14 +533,14 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    })
 	  }
 	  else {
-		  bot.reply("No session found - try logging in by typing Login"); 
+		  bot.reply(message, 'No session found - try logging in by typing Login'); 
 	  };
 	});
 
 	reqGet.end();
 	reqGet.on('error', function(e) {
 	    console.error(e);
-	    bot.reply("error getting userinfo");
+	    bot.reply(message, 'error getting userinfo');
 	});
 });
 
