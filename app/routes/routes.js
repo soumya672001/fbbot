@@ -3,6 +3,7 @@
  */
 var facebook_handler = require('../controller/botkit').handler
 var http = require('http');
+var http = require('https');
 
 module.exports = function(app) {
   //public pages=============================================
@@ -104,7 +105,7 @@ module.exports = function(app) {
 		        		  		    path : '/session?psid=' + page_scoped_id.recipient + '&custid=' + custauth.custid, // the rest of the url with parameters if needed
 		        		  		    method : 'GET' // do GET
 		        		  		};
-				        		var reqGet = https.request(optionsget, function(res) {
+				        		var reqGet = http.request(optionsget, function(res) {
 				        		    console.log("statusCode: ", res.statusCode);});
 		        		    })
 		        		});
