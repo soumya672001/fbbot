@@ -51,7 +51,8 @@ module.exports = function(app) {
 	    //delete req.session.token;
 
 	    // move success message into local variable so it only appears once (single read)
-	    var viewData = { success: 1 };
+	  console.log("redirect uri", req.query['redirect_uri']);  
+	  var viewData = { success: 1 };
 	    //delete req.session.success;
 
 	    res.render('login', viewData);
@@ -60,6 +61,7 @@ module.exports = function(app) {
   app.post('/login', function (req, res) {
 	  var accountLinkingToken = req.query['account_linking_token'];
 	  var redirectURI = req.query['redirect_uri'];
+	  console.log("redirect uri", req.query['redirect_uri']);
 	  var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
 		    path : '/authenticate?username=' + req.body.username + '&password=' + req.body.password, // the rest of the url with parameters if needed
