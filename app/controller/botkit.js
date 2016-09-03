@@ -453,7 +453,7 @@ controller.hears(['valnew'], 'message_received', function(bot, message) {
 	    // uncomment it for header details
 	//  console.log("headers: ", res.headers);
 
-	  if (res.statusCode = 200){
+	  if (res.statusCode === 200){
 	    res.on('data', function(d) {
 	        console.info('GET result:\n');
 	        process.stdout.write(d);
@@ -474,7 +474,7 @@ controller.hears(['valnew'], 'message_received', function(bot, message) {
 	    		    console.log("statusCode: ", res.statusCode);
 	    		    // uncomment it for header details
 	    		//  console.log("headers: ", res.headers);
-	    		     if (res.statusCode = 200) {  
+	    		     if (res.statusCode === 200) {  
 	    		        res.on('data', function(d) {
 	    		        console.info('GET result:\n');
 	    		        process.stdout.write(d);
