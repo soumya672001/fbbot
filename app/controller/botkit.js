@@ -338,7 +338,7 @@ controller.hears(['policy values'], 'message_received', function(bot, message) {
 
 });
 
-controller.hears(['valuation'], 'message_received', function(bot, message) {
+controller.hears(['valnew'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'graph.facebook.com', // here only the domain name
 		    path : '/v2.6/' + message.user + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + process.env.page_token, // the rest of the url with parameters if needed
@@ -437,7 +437,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	});
 });
 
-controller.hears(['valnew'], 'message_received', function(bot, message) {
+controller.hears(['valuation'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
 		    path : '/sessiondetail?psid=' + message.user , // the rest of the url with parameters if needed
@@ -518,7 +518,7 @@ controller.hears(['valnew'], 'message_received', function(bot, message) {
 	    		      })
 	    		     }
 	    		     else {
-	    		    	 bot.reply("No policies found"); 
+	    		    	 bot.reply(message, 'No policies found'); 
 	    		     };
 //	    		        convo.say('valuation is: ' + PolValue.valuation);
 //	    		        convo.next();
@@ -528,7 +528,7 @@ controller.hears(['valnew'], 'message_received', function(bot, message) {
 	        		reqGet.on('error', function(e) {
 	        		    console.error(e);
 	        //		    convo.next();
-	        		    bot.reply("error getting policies");
+	        		    bot.reply(message, 'error getting policies');
 	        		});
 	    })
 	  }
