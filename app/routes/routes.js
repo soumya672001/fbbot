@@ -59,7 +59,7 @@ module.exports = function(app) {
 	    res.render('login', viewData);
 	});
 
-  app.post('/login', function (req, res) {
+  app.post('/login', function (req, res1) {
 	  var accountLinkingToken = req.query['account_linking_token'];
 	  var redirectURI = req.query['redirect_uri'];
 	  console.log("redirect uri", req.query['redirect_uri']);
@@ -112,17 +112,17 @@ module.exports = function(app) {
 		        		});
 		        		reqGet1.end();
 		        		
-		        		res.writeHead(301,
+		        		res1.writeHead(301,
 		        				  {Location: redirectURI + '&authorization_code=' + custauth.authorization_code}
 		        				);
-		        		res.end();
+		        		res1.end();
 	
 		        	}
 		        	else if (res.statusCode = 404 ){
-		        		res.writeHead(301,
+		        		res1.writeHead(301,
 		        				  {Location: redirectURI }
 		        				);
-		        		res.end();
+		        		res1.end();
 		        	}
 		        })
     		});
