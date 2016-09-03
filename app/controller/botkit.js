@@ -381,7 +381,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		        process.stdout.write(d);
 	    		        console.info('\n\nCall completed');
 //	    		        convo.say("You have following policies - select the number or all")
-	    		        if (d){
+	    		        
 	    		        policies = JSON.parse(d);
 	    		        bot.startConversation(message, function(err, convo) {
 	    		        	
@@ -416,11 +416,6 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	    		            }
 	    		            ]);
 	    		        });
-	    		        }
-	    		        else
-	    		        	{
-	    		        	console.info('no policies');
-	    		        	bot.reply(message, 'no policies found');}
 	    		      });
 //	    		        convo.say('valuation is: ' + PolValue.valuation);
 //	    		        convo.next();
