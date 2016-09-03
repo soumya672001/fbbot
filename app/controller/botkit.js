@@ -437,6 +437,113 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	});
 });
 
+controller.hears(['valnew'], 'message_received', function(bot, message) {
+	var optionsget = {
+		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+		    path : '/sessiondetail?psid=' + message.user , // the rest of the url with parameters if needed
+		    method : 'GET' // do GET
+		};
+	console.info('Options prepared:');
+	console.info(optionsget);
+	console.info('Do the GET call');
+	//var PolValue;
+	// do the GET request
+	var reqGet = http.request(optionsget, function(res) {
+	    console.log("statusCode: ", res.statusCode);
+	    // uncomment it for header details
+	//  console.log("headers: ", res.headers);
+
+	  if (res.statusCode = 200){
+	    res.on('data', function(d) {
+	        console.info('GET result:\n');
+	        process.stdout.write(d);
+	        console.info('\n\nCall completed');
+	        var sessioninfo = JSON.parse(d);
+	    	var policies;
+	    	var optionsget = {
+	    		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+	    		    path : '/policybycustid?custid=' + sessioninfo.custid, // the rest of the url with parameters if needed
+	    		    method : 'GET' // do GET
+	    		};
+	    	
+	    		console.info('Options prepared:');
+	    		console.info(optionsget);
+	    		console.info('Do the GET call');
+	    		// do the GET request
+	    		var reqGet = http.request(optionsget, function(res) {
+	    		    console.log("statusCode: ", res.statusCode);
+	    		    // uncomment it for header details
+	    		//  console.log("headers: ", res.headers);
+	    		     if (res.statusCode = 200) {  
+	    		        res.on('data', function(d) {
+	    		        console.info('GET result:\n');
+	    		        process.stdout.write(d);
+	    		        console.info('\n\nCall completed');
+//	    		        convo.say("You have following policies - select the number or all")
+	    		        
+	    		        policies = JSON.parse(d);
+	    		        bot.startConversation(message, function(err, convo) {
+	    		        	
+	    		        	convo.say("You have following policies:");
+	    		            policies.forEach(function(element,index){
+	    		            	console.log(element, index);
+	    		            	convo.say( '  ' + (index + 1) + '.' + element.policy);
+	    		            	});
+	    		         
+	    		        
+	    		            convo.ask('select the number', [
+	    		                {
+	    		                    pattern: /^\d{1}$/,
+	    		                    callback: function(response, convo) {
+	    		                    	var listitem = response.text - 1;
+	    		                    	convo.say (policies[listitem].policy + ":" + " £" + policies[listitem].valuation);
+	    		                    	convo.next();
+	    		                    	//var PolValue = res;
+	    		                    	//convo.say('valuation is: ' + PolValue.valuation);
+	    		                        //convo.next();
+	    		                        
+	    		                    }
+	    		                },
+	    		            {
+	    		                default: true,
+	    		                callback: function(response, convo) {
+	    		                   convo.say('invalid selection');
+	    		               //     convo.next();
+	    		                   convo.repeat();
+	    		                   convo.next();
+	    		                }
+	    		            }
+	    		            ]);
+	    		        });
+	    		      })
+	    		     }
+	    		     else {
+	    		    	 bot.reply("No policies found"); 
+	    		     };
+//	    		        convo.say('valuation is: ' + PolValue.valuation);
+//	    		        convo.next();
+	        		});
+
+	        		reqGet.end();
+	        		reqGet.on('error', function(e) {
+	        		    console.error(e);
+	        //		    convo.next();
+	        		    bot.reply("error getting policies");
+	        		});
+	    })
+	  }
+	  else {
+		  bot.reply("No session found - try logging in by typing Login"); 
+	  };
+	});
+
+	reqGet.end();
+	reqGet.on('error', function(e) {
+	    console.error(e);
+	    bot.reply("error getting userinfo");
+	});
+});
+
 controller.hears(['shutdown'], 'message_received', function(bot, message) {
 
     bot.startConversation(message, function(err, convo) {
@@ -477,7 +584,7 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
     });
 
 
-controller.hears(['login'], 'message_received',
+controller.hears(['lognew'], 'message_received',
 	    function(bot, message) {
 
 	    //    var hostname = os.hostname();
@@ -500,7 +607,7 @@ controller.hears(['login'], 'message_received',
 	        bot.reply(message, message_with_attachment);
 	    });
 
-controller.hears(['lognew'], 'message_received',
+controller.hears(['login'], 'message_received',
 	    function(bot, message) {
 
 	    //    var hostname = os.hostname();
@@ -524,7 +631,7 @@ controller.hears(['lognew'], 'message_received',
 	    });
 
 controller.on('message_received', function(bot, message) {
-    bot.reply(message, 'Try: `what is my name` or `who are you` or `valuation` or `call me captain`');
+    bot.reply(message, 'Try: `login` or `uptime` or `valuation` or `call me captain`');
     return false;
 });
 
