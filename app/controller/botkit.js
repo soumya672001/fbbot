@@ -630,6 +630,28 @@ controller.hears(['login'], 'message_received',
 	        bot.reply(message, message_with_attachment);
 	    });
 
+controller.hears(['logout'], 'message_received',
+	    function(bot, message) {
+
+	    //    var hostname = os.hostname();
+	        console.info('in the logout section');
+		    var message_with_attachment = {
+		        attachment: {
+		            'type': 'template',
+		            'payload': {
+		              'template_type': 'button',
+		              'text': 'Unlink your your account.',
+		              'buttons':[{
+		                'type': 'account_unlink'
+		              }]
+		            }
+		          }
+		    };
+	        //var uptime = formatUptime(process.uptime());
+
+	        bot.reply(message, message_with_attachment);
+	    });
+
 controller.on('message_received', function(bot, message) {
     bot.reply(message, 'Try: `login` or `uptime` or `valuation` or `call me captain`');
     return false;
@@ -738,6 +760,22 @@ var handler = function(obj){
           controller.trigger('message_delivered', [bot, message]);
 
         }
+        else if (facebook_message.account_linking.status = "unlinked") {
+        	var optionsget = {
+        		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+        		    path : '/sessiondelete?psid=' + facebook_message.sender.id , // the rest of the url with parameters if needed
+        		    method : 'GET' // do GET
+        		};
+        	console.info('Options prepared:');
+        	console.info(optionsget);
+        	console.info('Do the GET call');
+        	//var PolValue;
+        	// do the GET request
+        	var reqGet = http.request(optionsget, function(res) {
+        	    console.log("statusCode: ", res.statusCode);
+        	}
+
+          }
         else {
           controller.log('Got an unexpected message from Facebook: ', facebook_message);
         }
