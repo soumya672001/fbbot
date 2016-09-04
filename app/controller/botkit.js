@@ -761,7 +761,7 @@ var handler = function(obj){
 
         }
         else if (facebook_message.account_linking) {
-        	if (facebook_message.account_linking.status = "unlinked"){
+        	if (facebook_message.account_linking.status === "unlinked"){
         	var optionsget = {
         		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
         		    path : '/sessiondelete?psid=' + facebook_message.sender.id , // the rest of the url with parameters if needed
