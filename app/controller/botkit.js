@@ -639,11 +639,13 @@ controller.hears(['logout'], 'message_received',
 		        attachment: {
 		            'type': 'template',
 		            'payload': {
-		              'template_type': 'button',
-		              'text': 'Unlink your your account.',
-		              'buttons':[{
-		                'type': 'account_unlink'
-		              }]
+		              'template_type': 'generic',
+		              "elements": [{
+		                  "title": "Unlink account",
+		                  "buttons": [{
+		                    "type": "account_unlink"
+		                  }]
+		                }]
 		            }
 		          }
 		    };
