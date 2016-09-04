@@ -760,7 +760,8 @@ var handler = function(obj){
           controller.trigger('message_delivered', [bot, message]);
 
         }
-        else if (facebook_message.account_linking.status = "unlinked") {
+        else if (facebook_message.account_linking) {
+        	if (facebook_message.account_linking.status = "unlinked"){
         	var optionsget = {
         		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
         		    path : '/sessiondelete?psid=' + facebook_message.sender.id , // the rest of the url with parameters if needed
@@ -774,7 +775,8 @@ var handler = function(obj){
         	var reqGet = http.request(optionsget, function(res) {
         	    console.log("statusCode: ", res.statusCode);
         	});
-
+        	reqGet.end();
+        	}
           } 
         else {
           controller.log('Got an unexpected message from Facebook: ', facebook_message);
