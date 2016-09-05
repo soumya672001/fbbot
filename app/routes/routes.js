@@ -53,10 +53,11 @@ module.exports = function(app) {
 
 	    // move success message into local variable so it only appears once (single read)
 	  console.log("redirect uri", req.query['redirect_uri']);  
-	  var viewData = { success: 1 };
+	  //var viewData = { success: 1 };
 	    //delete req.session.success;
 
-	    res.render('login', viewData);
+	  //  res.render('login', viewData);
+	    res.render('login');
 	});
 
   app.post('/login', function (req, res1) {
