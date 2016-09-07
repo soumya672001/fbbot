@@ -544,6 +544,103 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	});
 });
 
+controller.hears(['valstruct'], 'message_received', function(bot, message) {
+	var optionsget = {
+		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+		    path : '/sessiondetail?psid=' + message.user , // the rest of the url with parameters if needed
+		    method : 'GET' // do GET
+		};
+	console.info('Options prepared:');
+	console.info(optionsget);
+	console.info('Do the GET call');
+	//var PolValue;
+	// do the GET request
+	var reqGet = http.request(optionsget, function(res) {
+	    console.log("statusCode: ", res.statusCode);
+	    // uncomment it for header details
+	//  console.log("headers: ", res.headers);
+
+	  if (res.statusCode === 200){
+	    res.on('data', function(d) {
+	        console.info('GET result:\n');
+	        process.stdout.write(d);
+	        console.info('\n\nCall completed');
+	        var sessioninfo = JSON.parse(d);
+	    	var policies;
+	    	var optionsget = {
+	    		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+	    		    path : '/policybycustid?custid=' + sessioninfo.custid, // the rest of the url with parameters if needed
+	    		    method : 'GET' // do GET
+	    		};
+	    	
+	    		console.info('Options prepared:');
+	    		console.info(optionsget);
+	    		console.info('Do the GET call');
+	    		// do the GET request
+	    		var reqGet = http.request(optionsget, function(res) {
+	    		    console.log("statusCode: ", res.statusCode);
+	    		    // uncomment it for header details
+	    		//  console.log("headers: ", res.headers);
+	    		     if (res.statusCode === 200) {  
+	    		        res.on('data', function(d) {
+	    		        console.info('GET result:\n');
+	    		        process.stdout.write(d);
+	    		        console.info('\n\nCall completed');
+//	    		        convo.say("You have following policies - select the number or all")
+	    		        
+	    		        policies = JSON.parse(d);
+	    		        bot.startConversation(message, function(err, convo) {
+	    		            attachment: {
+	    		                'type': 'template',
+	    		                'payload': {
+	    		                    'template_type': 'generic'
+	    		                }
+	    		            };
+	    		      //  	convo.say("You have following policies:");
+	    		            policies.forEach(function(element,index){
+	    		            	console.log(element, index);
+	    		     //       	convo.say( '  ' + (index + 1) + '.' + element.policy);
+	    		            	attachment.payload.elements(index).title = "policy:" + element.policy;
+	    		            	attachment.payload.elements(index).buttons(0).type = 'postback';
+	    		            	attachment.payload.elements(index).buttons(0).title = 'valuation';
+	    		            	attachment.payload.elements(index).buttons(0).payload = element.policy;
+	    		            	});
+	    		         
+	    		        
+	    		            convo.ask(attachment , function(response, convo) {
+	    		                // whoa, I got the postback payload as a response to my convo.ask!
+	    		                convo.next();
+	    		            });
+	    		        });
+	    		      })
+	    		     }
+	    		     else {
+	    		    	 bot.reply(message, 'No policies found'); 
+	    		     };
+//	    		        convo.say('valuation is: ' + PolValue.valuation);
+//	    		        convo.next();
+	        		});
+
+	        		reqGet.end();
+	        		reqGet.on('error', function(e) {
+	        		    console.error(e);
+	        //		    convo.next();
+	        		    bot.reply(message, 'error getting policies');
+	        		});
+	    })
+	  }
+	  else {
+		  bot.reply(message, 'No session found - try logging in by typing Login'); 
+	  };
+	});
+
+	reqGet.end();
+	reqGet.on('error', function(e) {
+	    console.error(e);
+	    bot.reply(message, 'error getting userinfo');
+	});
+});
+
 controller.hears(['shutdown'], 'message_received', function(bot, message) {
 
     bot.startConversation(message, function(err, convo) {
