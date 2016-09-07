@@ -593,7 +593,8 @@ controller.hears(['valstruct'], 'message_received', function(bot, message) {
 	    		        	var message_with_attachment = { attachment: {
 	    		                'type': 'template',
 	    		                'payload': {
-	    		                    'template_type': 'generic'
+	    		                    'template_type': 'generic',
+	    		                    'elements': []
 	    		                }
 	    		            }
 	    		        	};
