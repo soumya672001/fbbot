@@ -590,24 +590,25 @@ controller.hears(['valstruct'], 'message_received', function(bot, message) {
 	    		        
 	    		        policies = JSON.parse(d);
 	    		        bot.startConversation(message, function(err, convo) {
-	    		            attachment: {
+	    		        	var message_with_attachment = { attachment: {
 	    		                'type': 'template',
 	    		                'payload': {
 	    		                    'template_type': 'generic'
 	    		                }
-	    		            };
+	    		            }
+	    		        	};
 	    		      //  	convo.say("You have following policies:");
 	    		            policies.forEach(function(element,index){
 	    		            	console.log(element, index);
 	    		     //       	convo.say( '  ' + (index + 1) + '.' + element.policy);
-	    		            	attachment.payload.elements(index).title = "policy:" + element.policy;
-	    		            	attachment.payload.elements(index).buttons(0).type = 'postback';
-	    		            	attachment.payload.elements(index).buttons(0).title = 'valuation';
-	    		            	attachment.payload.elements(index).buttons(0).payload = element.policy;
+	    		            	message_with_attachment.attachment.payload.elements(index).title = "policy:" + element.policy;
+	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).type = 'postback';
+	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).title = 'valuation';
+	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).payload = element.policy;
 	    		            	});
 	    		         
 	    		        
-	    		            convo.ask(attachment , function(response, convo) {
+	    		            convo.ask(message_with_attachment , function(response, convo) {
 	    		                // whoa, I got the postback payload as a response to my convo.ask!
 	    		                convo.next();
 	    		            });
