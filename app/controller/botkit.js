@@ -601,10 +601,10 @@ controller.hears(['valstruct'], 'message_received', function(bot, message) {
 	    		            policies.forEach(function(element,index){
 	    		            	console.log(element, index);
 	    		     //       	convo.say( '  ' + (index + 1) + '.' + element.policy);
-	    		            	message_with_attachment.attachment.payload.elements(index).title = "policy:" + element.policy;
-	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).type = 'postback';
-	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).title = 'valuation';
-	    		            	message_with_attachment.attachment.payload.elements(index).buttons(0).payload = element.policy;
+	    		            	message_with_attachment.attachment.payload.elements[index].title = "policy:" + element.policy;
+	    		            	message_with_attachment.attachment.payload.elements[index].buttons(0).type = 'postback';
+	    		            	message_with_attachment.attachment.payload.elements[index].buttons(0).title = 'valuation';
+	    		            	message_with_attachment.attachment.payload.elements[index].buttons(0).payload = element.policy;
 	    		            	});
 	    		         
 	    		        
