@@ -783,12 +783,10 @@ controller.hears(['logout'], 'message_received',
 		            'type': 'template',
 		            'payload': {
 		              'template_type': 'button',
-		              "elements": [{
-		                  "title": "Unlink account",
+		              'text': "Unlink account",
 		                  "buttons": [{
 		                    "type": "account_unlink"
 		                  }]
-		                }]
 		            }
 		          }
 		    };
