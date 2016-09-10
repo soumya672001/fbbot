@@ -114,11 +114,7 @@ controller.hears(['structured'], 'message_received', function(bot, message) {
     });
 });
 
-controller.on('facebook_postback', function(bot, message) {
 
-    bot.reply(message, 'Great Choice!!!! (' + message.payload + ')');
-
-});
 
 
 controller.hears(['call me (.*)', 'my name is (.*)'], 'message_received', function(bot, message) {
@@ -646,6 +642,43 @@ controller.hears(['valstruct'], 'message_received', function(bot, message) {
 	});
 });
 
+controller.on('facebook_postback', function(bot, message) {
+
+   // bot.reply(message, 'Great Choice!!!! (' + message.payload + ')');
+	var optionsget = {
+		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
+		    path : '/polvalue?policy=' + message.payload, // the rest of the url with parameters if needed
+		    method : 'GET' // do GET
+		};
+	
+		console.info('Options prepared:');
+		console.info(optionsget);
+		console.info('Do the GET call');
+		// do the GET request
+		var reqGet = http.request(optionsget, function(res) {
+		    console.log("statusCode: ", res.statusCode);
+		    // uncomment it for header details
+		//  console.log("headers: ", res.headers);
+		     if (res.statusCode === 200) {  
+		        res.on('data', function(d) {
+		        console.info('GET result:\n');
+		        process.stdout.write(d);
+		        console.info('\n\nCall completed');
+//		        convo.say("You have following policies - select the number or all")
+		        
+		        var retvalue = JSON.parse(d);
+		        bot.reply(message, 'Valuation is: ' + retvalue.valuation); 
+		      })
+		     }
+		     else {
+		    	 bot.reply(message, 'policy not found'); 
+		     };
+//		        convo.say('valuation is: ' + PolValue.valuation);
+//		        convo.next();
+    		});
+
+});
+
 controller.hears(['shutdown'], 'message_received', function(bot, message) {
 
     bot.startConversation(message, function(err, convo) {
@@ -825,15 +858,15 @@ var handler = function(obj){
           };
 
           controller.trigger('facebook_postback', [bot, message]);
-
-          var message = {
+   /* for developers use only? - stop receiving postback as msgs */
+   /*       var message = {
               text: facebook_message.postback.payload,
               user: facebook_message.sender.id,
               channel: facebook_message.sender.id,
               timestamp: facebook_message.timestamp,
           };
 
-          controller.receiveMessage(bot, message);
+          controller.receiveMessage(bot, message); */
 
         }
         //When a user clicks on "Send to Messenger"
