@@ -433,7 +433,7 @@ controller.hears(['valnew'], 'message_received', function(bot, message) {
 	});
 });
 
-controller.hears(['valuation'], 'message_received', function(bot, message) {
+controller.hears(['valstruct'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
 		    path : '/sessiondetail?psid=' + message.user , // the rest of the url with parameters if needed
@@ -540,7 +540,7 @@ controller.hears(['valuation'], 'message_received', function(bot, message) {
 	});
 });
 
-controller.hears(['valstruct'], 'message_received', function(bot, message) {
+controller.hears(['valuation'], 'message_received', function(bot, message) {
 	var optionsget = {
 		    host : 'valuation-nodeaholic.rhcloud.com', // here only the domain name
 		    path : '/sessiondetail?psid=' + message.user , // the rest of the url with parameters if needed
@@ -673,9 +673,17 @@ controller.on('facebook_postback', function(bot, message) {
 		     else {
 		    	 bot.reply(message, 'policy not found'); 
 		     };
+		     
+		     
 //		        convo.say('valuation is: ' + PolValue.valuation);
 //		        convo.next();
     		});
+		reqGet.end();
+		reqGet.on('error', function(e) {
+		    console.error(e);
+//		    convo.next();
+		    bot.reply(message, 'error getting valuation');
+		});
 
 });
 
