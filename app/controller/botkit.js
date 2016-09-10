@@ -782,7 +782,7 @@ controller.hears(['logout'], 'message_received',
 		        attachment: {
 		            'type': 'template',
 		            'payload': {
-		              'template_type': 'generic',
+		              'template_type': 'button',
 		              "elements": [{
 		                  "title": "Unlink account",
 		                  "buttons": [{
