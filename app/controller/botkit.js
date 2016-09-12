@@ -796,7 +796,7 @@ controller.hears(['logout'], 'message_received',
 	    });
 
 controller.on('message_received', function(bot, message) {
-    bot.reply(message, 'Try: `login` or `uptime` or `valuation` or `call me captain`');
+    bot.reply(message, 'Try: `login` or `uptime` or `who are you` or `call me captain` or `valuation` or `logout`');
     return false;
 });
 
